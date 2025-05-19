@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import localFont from 'next/font/local'
+import Header from "@/components/core/header";
+
+const surt = localFont({
+  src: './fonts/bitcrusher condensed bd.woff',
+  variable: '--font-surt-bold',
+})
 
 export const metadata: Metadata = {
-  title: "Techsolace - Your Dream Our Responsibilityz",
-  description:
-    "Discover Techsolace, where your dreams meet our commitment. We provide innovative tech solutions tailored to your needs, ensuring excellence and reliability every step of the way. Experience the future with Techsolace - Your Dream, Our Responsibility.",
-  icons: {
-    icon: "/icons/favicon.ico",
-  },
+  title: "Frontend Template",
+  description: "Frontend Template",
 };
 
 export default function RootLayout({
@@ -17,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${surt.variable}`}>
       <body>
         <ThemeProvider
           attribute="class"
@@ -25,6 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
         </ThemeProvider>
       </body>
