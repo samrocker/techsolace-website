@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import localFont from 'next/font/local'
 import Header from "@/components/core/header";
+import { SocialDock } from "@/components/landing-page/social-dock";
 
 const surt = localFont({
   src: './fonts/bitcrusher condensed bd.woff',
@@ -29,6 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
+          <SocialDock />
           {children}
         </ThemeProvider>
       </body>

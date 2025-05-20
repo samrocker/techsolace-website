@@ -1,91 +1,124 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import React, { useEffect, useState } from "react";
+import logo from "../../../public/icons/favicon.ico";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="w-full fixed top-0 left-0 z-50">
-      <main className="max-w-[1440px] mx-auto">
-        <div className="px-5 py-7 flex-center">
-          <div className="flex-[2] md:flex-[1] w-full flex-start">
-            <Link href="/" className="text-xl font-normal">
-              Samridh Satnalika
-            </Link>
+    <section
+      className={`w-full fixed top-0 left-0 z-50 transition-colors duration-300 font-Outfit ${
+        isScrolled ? "bg-[#0A0A0A]/80 backdrop-blur-lg" : "bg-transparent"
+      }`}
+    >
+      <main className="max-w-[1000px] m-auto">
+        {/* Desktop navigation */}
+        <div className="px-5 py-5 w-full hidden md:flex-between gap-5">
+          <Link href={"/"} className="text-md font-normal text-white/75">
+            Feature
+          </Link>
+          <Link href={"/"} className="text-md font-normal text-white/75">
+            Our Services
+          </Link>
+          <div className="flex-center gap-1">
+            <Image src={logo} alt="logo" width={40} height={40} />
           </div>
-          <div className="flex-[2] w-full hidden md:flex-center gap-5">
-            <Link href="/" className="text-base font-normal">
-              Home
-            </Link>
-            <Link href="/" className="text-base font-normal">
-              About
-            </Link>
-            <Link href="/" className="text-base font-normal">
-              Blogs
-            </Link>
-            <Link href="/" className="text-base font-normal">
-              Projects
-            </Link>
+          <Link href={"/"} className="text-md font-normal text-white/75">
+            About Us
+          </Link>
+          <Link href={"/"} className="text-md font-normal text-white/75">
+            Contact Us
+          </Link>
+        </div>
+
+        {/* Mobile navigation */}
+        <div className="px-5 py-5 w-full flex justify-between items-center md:hidden">
+          <div className="flex-center gap-1">
+            <Image src={logo} alt="logo" width={40} height={40} />
           </div>
-          <div className="flex-[1] w-full hidden md:flex-end">
-            <Button className="rounded-full">
-              <Link href="/" className="text-base font-normal">
-                Contact
-              </Link>
-            </Button>
-          </div>
-          <div className="flex-[1] w-full flex-end md:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <button
-                  className="relative w-10 h-10 flex flex-col justify-center items-center focus:outline-none"
-                  aria-label={isOpen ? "Close menu" : "Open menu"}
-                >
-                  <span
-                    className={`h-[1px] w-10 bg-primary rounded-full absolute transition-all duration-300 ease-in-out ${
-                      isOpen ? "rotate-45" : "translate-y-[-6px]"
-                    }`}
-                  />
-                  <span
-                    className={`h-[1px] w-10 bg-primary rounded-full absolute transition-all duration-300 ease-in-out ${
-                      isOpen ? "opacity-0" : "opacity-100"
-                    }`}
-                  />
-                  <span
-                    className={`h-[1px] w-10 bg-primary rounded-full absolute transition-all duration-300 ease-in-out ${
-                      isOpen ? "-rotate-45" : "translate-y-[6px]"
-                    }`}
-                  />
-                </button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <div className="h-screen w-full flex flex-col gap-10 items-start justify-center">
-                  <Link href="/" className="text-3xl font-normal">
-                    Home
-                  </Link>
-                  <Link href="/" className="text-3xl font-normal">
-                    About
-                  </Link>
-                  <Link href="/" className="text-3xl font-normal">
-                    Blogs
-                  </Link>
-                  <Link href="/" className="text-3xl font-normal">
-                    Projects
-                  </Link>
-                  <Button
-                    className="rounded-full text-lg"
-                    variant={"default"}
-                    size={"lg"}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button
+                className="relative w-10 h-10 flex flex-col justify-center items-center focus:outline-none"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                <span
+                  className={`h-[1px] w-6 bg-white rounded-full absolute transition-all duration-300 ease-in-out ${
+                    isOpen ? "rotate-45" : "translate-y-[-5px]"
+                  }`}
+                />
+                <span
+                  className={`h-[1px] w-6 bg-white rounded-full absolute transition-all duration-300 ease-in-out ${
+                    isOpen ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`h-[1px] w-6 bg-white rounded-full absolute transition-all duration-300 ease-in-out ${
+                    isOpen ? "-rotate-45" : "translate-y-[5px]"
+                  }`}
+                />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="bg-[#121212] text-white">
+              <div className="flex flex-col gap-6 mt-10">
+                <SheetClose asChild>
+                  <Link
+                    href={"/"}
+                    className="text-lg font-normal text-white/75"
                   >
-                    Contact
-                  </Button>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+                    Feature
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={"/"}
+                    className="text-lg font-normal text-white/75"
+                  >
+                    Our Services
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={"/"}
+                    className="text-lg font-normal text-white/75"
+                  >
+                    About Us
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={"/"}
+                    className="text-lg font-normal text-white/75"
+                  >
+                    Contact Us
+                  </Link>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </main>
     </section>
