@@ -13,7 +13,7 @@ const PricingCard = ({
   buyButtonAction,
 }: PricingCardProps) => {
   return (
-    <div className="h-full w-full flex flex-col gap-5 rounded-2xl bg-[#191919] font-Outfit">
+    <div className="h-full w-full flex flex-col gap-5 rounded-2xl font-Outfit border">
       <div className="p-8 w-full flex flex-col gap-3">
         <h1 className="text-white text-2xl lg:text-3xl font-medium">
           {title} <span className="text-[#77CDFF]">{highlightedTitle}</span>
@@ -37,7 +37,6 @@ const PricingCard = ({
               Book A Call
             </button>
           </Link>
-
           <Link href={buyButtonAction} className="w-full">
             <button className="w-full py-4 bg-[#77CDFF] rounded-md text-[#191919] font-medium hover:bg-[#5bb8eb] transition-all">
               Click to buy
@@ -49,4 +48,4 @@ const PricingCard = ({
   );
 };
 
-export default PricingCard;
+export default PricingCard
