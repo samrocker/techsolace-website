@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import localFont from 'next/font/local'
 import Header from "@/components/core/header";
 import { SocialDock } from "@/components/landing-page/social-dock";
+import { Footer } from "@/components/core/footer";
 
 const surt = localFont({
   src: './fonts/bitcrusher condensed bd.woff',
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Header />
           <SocialDock />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

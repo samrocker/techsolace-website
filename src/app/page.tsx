@@ -1,6 +1,7 @@
 import About from "@/components/landing-page/about";
 import HeroSection from "@/components/landing-page/hero";
-import NewLetter from "@/components/landing-page/New-letter";
+import NewLetter from "@/components/landing-page/news-letter";
+import Partners from "@/components/landing-page/partners";
 import Pricing from "@/components/landing-page/pricing";
 import Testimonials from "@/components/landing-page/testimonials";
 // import Products from "@/components/landing-page/products";
@@ -18,6 +19,7 @@ export default function Home() {
       <Testimonials />
       <Pricing />
       <NewLetter />
+      <Partners />
     </main>
   );
 }
