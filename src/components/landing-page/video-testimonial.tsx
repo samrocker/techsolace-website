@@ -109,7 +109,7 @@ const VideoTestimonial = () => {
           <div className="w-full lg:w-[65%] relative rounded-xl overflow-hidden shadow-2xl group">
             <video
               ref={videoRef}
-              src="/videos/brandVideo.mp4"
+              src="https://ik.imagekit.io/inxr5mngi/brandVideo.mp4?updatedAt=1747785846921"
               autoPlay
               muted
               loop
