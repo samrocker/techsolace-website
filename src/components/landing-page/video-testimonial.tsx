@@ -5,6 +5,7 @@ import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Marquee } from "../ui/marquee";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 
 const reviews = [
   {
@@ -42,14 +43,15 @@ const ReviewCard = ({
   body: string;
 }) => {
   return (
-    <figure
+    <motion.figure
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
       className={cn(
         "relative h-full w-full sm:w-full cursor-pointer overflow-hidden rounded-xl border p-6",
-        // light styles
         "border-gray-950/[.1]",
-        // dark styles
         "dark:border-gray-50/25",
-        // hover effects
         "transition-all duration-300 hover:scale-[1.02] hover:shadow-lg",
         "hover:border-gray-950/20 dark:hover:border-gray-50/40"
       )}
@@ -74,12 +76,14 @@ const ReviewCard = ({
       <blockquote className="mt-4 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
         "{body}"
       </blockquote>
-    </figure>
+    </motion.figure>
   );
 };
 
 const VideoTestimonial = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
@@ -102,11 +106,16 @@ const VideoTestimonial = () => {
   };
 
   return (
-    <section className="py-16 mt-20">
+    <section ref={sectionRef} className="py-16 mt-20">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8 items-center">
           {/* Video Container - Takes 65% width on desktop */}
-          <div className="w-full lg:w-[65%] relative rounded-xl overflow-hidden shadow-2xl group">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full lg:w-[65%] relative rounded-xl overflow-hidden shadow-2xl group"
+          >
             <video
               ref={videoRef}
               src="https://ik.imagekit.io/inxr5mngi/brandVideo.mp4?updatedAt=1747785846921"
@@ -143,10 +152,15 @@ const VideoTestimonial = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Testimonial Container - Takes 35% width on desktop */}
-          <div className="h-[500px] w-full lg:w-[30%] hidden md:flex-center relative overflow-y-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="h-[500px] w-full lg:w-[30%] hidden md:flex-center relative overflow-y-hidden"
+          >
             <Marquee pauseOnHover vertical className="[--duration:7s] w-full">
               {firstRow.map((review) => (
                 <ReviewCard key={review.Position} {...review} />
@@ -157,8 +171,13 @@ const VideoTestimonial = () => {
             </Marquee>
             <div className="pointer-events-none absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/30 to-transparent z-10"></div>
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
-          </div>
-          <div className="w-full lg:w-[30%] flex-center flex-col gap-5 md:hidden relative overflow-y-hidden mt-10">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full lg:w-[30%] flex-center flex-col gap-5 md:hidden relative overflow-y-hidden mt-10"
+          >
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-Outfit font-medium">Testimonials</h1>
             <Marquee pauseOnHover className="[--duration:25s] w-full">
               {firstRow.map((review) => (
@@ -170,7 +189,7 @@ const VideoTestimonial = () => {
             </Marquee>
             <div className="pointer-events-none absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/30 to-transparent z-10"></div>
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

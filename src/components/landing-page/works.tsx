@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import Image1 from "../../../public/images/nut.png";
+import Image2 from "../../../public/images/sping.png";
+import { motion, useInView } from "framer-motion";
 
 interface ProjectCard {
   title: string;
@@ -57,25 +61,65 @@ const projects: ProjectCard[] = [
 ];
 
 const Works = () => {
+  const sectionRef = React.useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-20 mt-20">
-      <main className="max-w-[1440px] m-auto">
+    <section ref={sectionRef} className="py-20 mt-20">
+      <main className="max-w-[1440px] m-auto relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Image
+            src={Image1}
+            alt="earth-decoration"
+            className="w-24 xs:w-28 sm:w-32 md:w-40 lg:w-52 h-auto absolute top-10 xs:top-10 sm:top-20 md:top-0 lg:bottom-0 right-5 xs:right-12 sm:right-16 md:right-20 z-[-1]"
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Image
+            src={Image2}
+            alt="pen-decoration"
+            className="w-16 xs:w-28 sm:w-32 md:w-40 lg:w-52 h-auto absolute top-10 xs:top-6 sm:top-6 md:top-20 left-5 xs:left-12 sm:left-16 md:left-20 z-[-1]"
+          />
+        </motion.div>
         <div className="px-5 py-5 w-full flex-center flex-col gap-32">
-          <div className="w-full flex-center flex-col gap-5">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8 }}
+            className="w-full flex-center flex-col gap-5"
+          >
             <h1
               className="text-white text-5xl md:text-8xl lg:text-8xl font-bold uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient"
               style={{ fontFamily: "var(--font-surt-bold)" }}
             >
               Our Works
             </h1>
-            <p className="text-gray-300 text-sm md:text-lg text-center max-w-[800px] font-Outfit leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-gray-300 text-sm md:text-lg text-center max-w-[800px] font-Outfit leading-relaxed"
+            >
               We create thoughtful, effective solutions across design and
               digital. Each project reflects our focus on quality, creativity,
               and results. Take a look at what we've built.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="w-full relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="w-full relative"
+          >
             {/* Desktop Marquee */}
             <div className="hidden lg:block">
               <Marquee pauseOnHover className="[--duration:20s] w-full">
@@ -101,7 +145,7 @@ const Works = () => {
                 <CarouselNext className="right-2" />
               </Carousel>
             </div>
-          </div>
+          </motion.div>
         </div>
       </main>
     </section>
@@ -109,8 +153,17 @@ const Works = () => {
 };
 
 const ProjectCard = ({ project }: { project: ProjectCard }) => {
+  const cardRef = React.useRef(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-50px" });
+
   return (
-    <div className="group relative border border-white/20 rounded-xl overflow-hidden transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 backdrop-blur-sm mx-4 max-w-[500px] bg-black/20">
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5 }}
+      className="group relative border border-white/20 rounded-xl overflow-hidden transition-all duration-500 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 backdrop-blur-sm mx-4 max-w-[500px] bg-black/20"
+    >
       <div className="relative h-64 w-full">
         <Image
           src={project.image}
@@ -129,15 +182,15 @@ const ProjectCard = ({ project }: { project: ProjectCard }) => {
           </span>
           <div className="h-px flex-1 bg-gradient-to-r from-blue-500/50 to-transparent"></div>
         </div>
-        
+
         <h3 className="text-white text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors duration-300 tracking-tight">
           {project.title}
         </h3>
-        
+
         <p className="text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
           {project.description}
         </p>
-        
+
         <Link
           href={project.link}
           target="_blank"
@@ -159,7 +212,7 @@ const ProjectCard = ({ project }: { project: ProjectCard }) => {
           </svg>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

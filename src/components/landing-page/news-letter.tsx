@@ -1,68 +1,94 @@
-"use client";
-import React from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { motion } from "framer-motion";
+"use client"
 
-const NewLetter = () => {
+import React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import Image from "next/image"
+import { motion, useInView } from "framer-motion"
+import logo from "../../../public/images/Logo.png";
+
+export default function NewLetter() {
+  const [email, setEmail] = useState("")
+  const ref = React.useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 0.3 })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle form submission logic here
+    console.log("Email submitted:", email)
+    // Reset form
+    setEmail("")
+  }
+
   return (
-    <section className="w-full mt-32 relative overflow-hidden">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0" />
-      
-      <main className="max-w-[1440px] m-auto relative z-10">
-        <div className="px-5 py-20 w-full flex-between flex-col lg:flex-row gap-16">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="h-full w-full flex flex-col gap-8 items-start justify-center"
-          >
-            <h1
-              className="text-white text-5xl md:text-8xl lg:text-8xl font-bold uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient"
-              style={{ fontFamily: "var(--font-surt-bold)" }}
+    <motion.div 
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative w-full min-h-[400px] from-black via-gray-900 to-black bg-[radial-gradient(#222_1px,transparent_1px)] bg-[size:20px_20px] flex items-center justify-center px-4 py-16 md:py-24"
+    >
+      <div className="container max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8">
+          <div className="max-w-[1440px]">
+            <motion.h1 
+              className="text-4xl md:text-5xl font-bold mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              News Letter
-            </h1>
-            <p className="text-gray-300 text-base md:text-xl text-left max-w-[800px] font-Outfit leading-relaxed">
-              Stay in the loop with our latest updates, exclusive offers, and
-              behind-the-scenes content. Subscribe to our newsletter and be the
-              first to know what's new, exciting, and coming soon!
-            </p>
-          </motion.div>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-[#8ecfd8]"
+              >
+                You're special, and humanity
+              </motion.span>
+              <br />
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-white"
+              >
+                is counting <span className="text-[#8ecfd8]">on you</span>
+              </motion.span>
+            </motion.h1>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="h-full w-full flex flex-col gap-6 items-end justify-start"
-          >
-            <div className="w-full flex flex-col gap-4 items-end">
+            <motion.form 
+              onSubmit={handleSubmit} 
+              className="flex flex-col sm:flex-row gap-3 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full max-w-[400px] rounded-full bg-white/5 border-white/10 text-white placeholder:text-gray-400 focus:border-blue-500 transition-all duration-300 hover:bg-white/10"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-transparent border-gray-700 text-white placeholder:text-gray-500 h-12 min-w-[280px]"
               />
-              <Button 
-                className="rounded-full px-8 py-6 w-40 font-medium transition-all duration-300 hover:scale-105 text-white"
-                variant={"secondary"}
-              >
-                Subscribe Now
+              <Button type="submit" className="bg-[#8ecfd8] hover:bg-[#7bbbc4] text-black font-medium h-12 px-6">
+                Join Waitlist
               </Button>
-            </div>
-            <div className="w-full flex-end gap-3">
-              <Button 
-                className="rounded-full px-8 py-6 w-40 text-white font-medium transition-all duration-300 hover:bg-white/10 border-white/20 hover:border-white/40"
-                variant={"outline"}
-              >
-                Join Discord
-              </Button>
-            </div>
+            </motion.form>
+          </div>
+
+          <motion.div 
+            className="h-full flex-end"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <Image src={logo} alt="logo" width={1920} height={1080} className="max-w-[200px]" />
           </motion.div>
         </div>
-      </main>
-    </section>
-  );
-};
-
-export default NewLetter;
+      </div>
+    </motion.div>
+  )
+}

@@ -1,8 +1,11 @@
 "use client";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import React, { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 const Testimonials = () => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const videoRefs = [
     useRef<HTMLVideoElement>(null),
     useRef<HTMLVideoElement>(null),
@@ -47,25 +50,46 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="mt-28">
+    <section ref={sectionRef} className="mt-28">
       <main className="max-w-[1440px] m-auto">
         <div className="px-5 py-5 w-full flex-center flex-col gap-32">
-          <div className="w-full flex-center flex-col gap-5">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8 }}
+            className="w-full flex-center flex-col gap-5"
+          >
             <h1
               className="text-white text-5xl md:text-8xl lg:text-8xl font-bold uppercase bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient"
               style={{ fontFamily: "var(--font-surt-bold)" }}
             >
               Testimonials
             </h1>
-            <p className="text-gray-300 text-sm md:text-lg text-center max-w-[800px] font-Outfit leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-gray-300 text-sm md:text-lg text-center max-w-[800px] font-Outfit leading-relaxed"
+            >
               We create thoughtful, effective solutions across design and
               digital. Each project reflects our focus on quality, creativity,
               and results. Take a look at what we've built.
-            </p>
-          </div>
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center gap-5 group">
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center gap-5 group"
+          >
             {[0, 1, 2].map((index) => (
-              <div key={index} className="h-[700px] w-full flex-center rounded-3xl relative group">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.5, delay: 0.2 * index }}
+                className="h-[700px] w-full flex-center rounded-3xl relative group"
+              >
                 <video
                   ref={videoRefs[index]}
                   src={index === 1 
@@ -104,9 +128,9 @@ const Testimonials = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </main>
     </section>

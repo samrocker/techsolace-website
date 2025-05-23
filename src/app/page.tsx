@@ -1,4 +1,4 @@
-import About from "@/components/landing-page/about";
+import About from "@/components/landing-page/about";                                                                                  
 import HeroSection from "@/components/landing-page/hero";
 import NewLetter from "@/components/landing-page/news-letter";
 import Partners from "@/components/landing-page/partners";
