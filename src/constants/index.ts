@@ -15,7 +15,7 @@ export const pricingCardsContent = [
     buyButtonAction: "/buy-button",
   },
   {
-    title: "Software Development & Website",
+    title: "Development",
     highlightedTitle: "Package",
     description: "Includes:",
     features: [

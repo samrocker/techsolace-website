@@ -129,7 +129,7 @@ const Header = () => {
             }}
           >
             <Link href={"/"} className="text-md font-normal text-white/75">
-              Our Services
+              Our Packages
             </Link>
           </motion.div>
           <motion.div 
@@ -173,7 +173,7 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Link href={"/"} className="text-md font-normal text-white/75">
+            <Link href={"/contact-us"} className="text-md font-normal text-white/75">
               Contact Us
             </Link>
           </motion.div>
@@ -284,7 +284,7 @@ const Header = () => {
                 <motion.div variants={menuItemVariants}>
                   <SheetClose asChild>
                     <Link 
-                      href={"/"} 
+                      href={"/contact-us"} 
                       className="text-lg font-normal text-white/75 hover:text-white transition-colors duration-200"
                     >
                       Contact Us

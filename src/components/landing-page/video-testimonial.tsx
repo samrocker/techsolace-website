@@ -114,42 +114,44 @@ const VideoTestimonial = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full lg:w-[65%] relative rounded-xl overflow-hidden shadow-2xl group"
+            className="w-full lg:w-[65%] relative rounded-xl overflow-hidden shadow-2xl"
           >
-            <video
-              ref={videoRef}
-              src="https://ik.imagekit.io/inxr5mngi/brandVideo.mp4?updatedAt=1747785846921"
-              autoPlay
-              muted
-              loop
-              className="w-full h-full object-cover rounded-xl"
-            />
+            <div className="relative group">
+              <video
+                ref={videoRef}
+                src="https://ik.imagekit.io/inxr5mngi/brandVideo.mp4?updatedAt=1747785846921"
+                autoPlay
+                muted
+                loop
+                className="w-full h-full object-cover rounded-xl"
+              />
 
-            {/* Video Controls Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={togglePlay}
-                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-                  aria-label={isPlaying ? "Pause video" : "Play video"}
-                >
-                  {isPlaying ? (
-                    <Pause className="text-white w-5 h-5" />
-                  ) : (
-                    <Play className="text-white w-5 h-5" />
-                  )}
-                </button>
-                <button
-                  onClick={toggleMute}
-                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-                  aria-label={isMuted ? "Unmute video" : "Mute video"}
-                >
-                  {isMuted ? (
-                    <VolumeX className="text-white w-5 h-5" />
-                  ) : (
-                    <Volume2 className="text-white w-5 h-5" />
-                  )}
-                </button>
+              {/* Video Controls Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={togglePlay}
+                    className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors pointer-events-auto"
+                    aria-label={isPlaying ? "Pause video" : "Play video"}
+                  >
+                    {isPlaying ? (
+                      <Pause className="text-white w-5 h-5" />
+                    ) : (
+                      <Play className="text-white w-5 h-5" />
+                    )}
+                  </button>
+                  <button
+                    onClick={toggleMute}
+                    className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors pointer-events-auto"
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  >
+                    {isMuted ? (
+                      <VolumeX className="text-white w-5 h-5" />
+                    ) : (
+                      <Volume2 className="text-white w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>

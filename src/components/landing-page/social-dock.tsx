@@ -95,7 +95,7 @@ export function SocialDock() {
   return (
     <div className="h-screen fixed bottom-[50%] md:top-[30%] right-[25%] md:right-5 z-30">
       <TooltipProvider>
-        <Dock direction="middle" className="h-fit flex-row md:flex-col md:w-14">
+        <Dock direction="middle" className="h-fit flex-row md:flex-col md:w-14 bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-background dark:via-background/95 dark:to-background/90">
           {Object.entries(DATA.contact.social).map(([name, social]) => (
             <DockIcon key={name}>
               <Tooltip>

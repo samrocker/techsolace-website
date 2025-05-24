@@ -30,7 +30,7 @@ const about = () => {
         transition={{ duration: 1, delay: 0.7 }}
         className="absolute top-1/3 right-1/3 w-56 h-56 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-3xl opacity-30"
       />
-      <motion.div
+      {/* <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
         transition={{ duration: 0.8 }}
@@ -51,7 +51,7 @@ const about = () => {
           alt="pen-decoration"
           className="w-16 xs:w-28 sm:w-32 md:w-40 lg:w-52 h-auto absolute top-10 xs:top-6 sm:top-6 md:top-0 lg:top-10 left-5 xs:left-12 sm:left-16 md:left-24 lg:left-48 z-[-1]"
         />
-      </motion.div>
+      </motion.div> */}
       {/* <Image
         src={Book}
         alt="book-decoration"
