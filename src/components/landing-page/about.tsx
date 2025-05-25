@@ -16,19 +16,19 @@ const about = () => {
         initial={{ scale: 0, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 0.6 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-3xl opacity-60"
+        className="absolute top-[20%] left-[10%] w-64 h-64 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-3xl opacity-60"
       />
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 0.4 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 1, delay: 0.5 }}
-        className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 blur-3xl opacity-40"
+        className="absolute bottom-[20%] right-[15%] w-72 h-72 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 blur-3xl opacity-40"
       />
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 0.3 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 1, delay: 0.7 }}
-        className="absolute top-1/3 right-1/3 w-56 h-56 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-3xl opacity-30"
+        className="absolute top-[40%] right-[25%] w-56 h-56 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-3xl opacity-30"
       />
       {/* <motion.div
         initial={{ y: 20, opacity: 0 }}
