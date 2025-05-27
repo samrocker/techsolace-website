@@ -10,7 +10,7 @@ const Banner = () => {
   const isInView = useInView(ref, { once: true, amount: 0.3 })
 
   return (
-    <section className="w-full mt-10 relative">
+    <section className="w-full mt-10 lg:mt-32 relative mb-10">
       <main className="max-w-[1440px] m-auto">
         <div className="py-10 px-5 min-h-fit w-full flex-center">
           <div ref={ref} className="px-5 py-20 w-full flex-center flex-col gap-5 rounded-3xl relative">
@@ -26,7 +26,7 @@ const Banner = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-white text-center max-w-[700px] font-Outfit"
+              className="text-sm md:text-xl text-white text-center max-w-[700px] font-Outfit"
             >
               Ready with your business model? Submit a query and share your
               business model with us. We will handle your tech side completely
@@ -58,16 +58,16 @@ const Banner = () => {
               transition={{ duration: 1, delay: 0.6 }}
               className="w-full h-[40%] absolute bottom-0 left-0 z-[-1]"
             >
-              <Image
+              {/* <Image
                 src={retroGrid}
                 alt="retro-grid"
                 width={1920}
                 height={1080}
                 className="w-full h-full object-cover invert opacity-75 md:opacity-50"
                 priority
-              />
+              /> */}
             </motion.div>
-            <div className="w-full h-full absolute bg-[#111111] z-[-2] rounded-3xl"></div>
+            <div className="w-full h-full absolute z-[-2] rounded-3xl"></div>
           </div>
         </div>
       </main>

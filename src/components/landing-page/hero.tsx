@@ -8,10 +8,11 @@ import Earth from "../../../public/images/2.png";
 import Book from "../../../public/images/3.png";
 import { DotPattern } from "../ui/dot-pattern";
 import { cn } from "@/lib/utils";
+import { SocialDock } from "./social-dock";
 
 export default function Home() {
   return (
-    <section className="w-full relative overflow-hidden uppercase">
+    <section className="w-full relative overflow-hidden uppercase" id="hero">
       <Image
         src={PaperTexture}
         alt="hero-bg"
@@ -34,7 +35,7 @@ export default function Home() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-48 xs:top-10 sm:top-20 md:top-32 lg:top-52 left-8 xs:left-12 sm:left-16 md:left-24 z-10"
+          className="absolute top-48 xs:top-10 sm:top-20 md:top-32 lg:top-52 left-8 xs:left-12 sm:left-16 md:left-24 z-20"
         >
           <Image
             src={Pen}
@@ -52,7 +53,7 @@ export default function Home() {
             ease: "easeInOut",
             delay: 0.5,
           }}
-          className="absolute top-40 xs:top-6 sm:top-6 md:top-20 right-8 xs:right-12 sm:right-16 md:right-28 z-10"
+          className="absolute top-40 xs:top-6 sm:top-6 md:top-20 right-8 xs:right-12 sm:right-16 md:right-28 z-20"
         >
           <Image
             src={Earth}
@@ -70,7 +71,7 @@ export default function Home() {
             ease: "easeInOut",
             delay: 1,
           }}
-          className="absolute bottom-36 xs:bottom-10 sm:bottom-6 md:bottom-10 right-8 xs:right-12 sm:right-8 md:right-16 z-10"
+          className="absolute bottom-36 xs:bottom-10 sm:bottom-6 md:bottom-10 right-8 xs:right-12 sm:right-8 md:right-16 z-20"
         >
           <Image
             src={Book}
@@ -114,6 +115,7 @@ export default function Home() {
           </motion.h1>
         </div>
       </main>
+      <SocialDock />
     </section>
   );
 }

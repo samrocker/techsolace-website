@@ -16,6 +16,78 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Handle hash-based navigation
+    if (href.includes('#')) {
+      const hash = href.split('#')[1];
+      const element = document.getElementById(hash);
+      
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        // If element not found, navigate to the page with hash
+        window.location.href = href;
+      }
+    } else {
+      // Handle regular page navigation
+      const targetId = href.replace('/', '');
+      const element = document.getElementById(targetId);
+      
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      } else {
+        // If element not found, navigate to the page
+        window.location.href = href;
+      }
+    }
+  };
+
+  // Add effect to handle initial hash navigation
+  useEffect(() => {
+    const handleHashNavigation = () => {
+      // Wait for the page to be fully loaded
+      setTimeout(() => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+          const element = document.getElementById(hash);
+          if (element) {
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }, 100); // Small delay to ensure DOM is ready
+    };
+
+    // Handle initial hash navigation
+    handleHashNavigation();
+
+    // Handle hash changes
+    window.addEventListener('hashchange', handleHashNavigation);
+    return () => window.removeEventListener('hashchange', handleHashNavigation);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -113,8 +185,12 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Link href={"/"} className="text-md font-normal text-white/75">
-              Feature
+            <Link 
+              href={"/why-us"} 
+              className="text-md font-normal text-white/75"
+              onClick={(e) => handleSmoothScroll(e, "/why-us")}
+            >
+              Why Us
             </Link>
           </motion.div>
           <motion.div 
@@ -128,7 +204,11 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Link href={"/"} className="text-md font-normal text-white/75">
+            <Link 
+              href={"/"} 
+              className="text-md font-normal text-white/75"
+              onClick={(e) => handleSmoothScroll(e, "/#packages")}
+            >
               Our Packages
             </Link>
           </motion.div>
@@ -137,7 +217,6 @@ const Header = () => {
             variants={navItemVariants}
             whileHover={{ 
               scale: 1.1,
-              rotate: [0, -5, 5, -5, 0],
               transition: { duration: 0.5 }
             }}
             whileTap={{ 
@@ -145,7 +224,9 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Image src={logo} alt="logo" width={40} height={40} />
+            <Link href={"/"} onClick={(e) => handleSmoothScroll(e, "/#hero")}>
+              <Image src={logo} alt="logo" width={40} height={40} />
+            </Link>
           </motion.div>
           <motion.div 
             variants={navItemVariants}
@@ -158,7 +239,11 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Link href={"/"} className="text-md font-normal text-white/75">
+            <Link 
+              href={"/#about"} 
+              className="text-md font-normal text-white/75"
+              onClick={(e) => handleSmoothScroll(e, "/#about")}
+            >
               About Us
             </Link>
           </motion.div>
@@ -173,7 +258,11 @@ const Header = () => {
               transition: { duration: 0.1 }
             }}
           >
-            <Link href={"/contact-us"} className="text-md font-normal text-white/75">
+            <Link 
+              href={"/contact-us"} 
+              className="text-md font-normal text-white/75"
+              onClick={(e) => handleSmoothScroll(e, "/contact-us")}
+            >
               Contact Us
             </Link>
           </motion.div>
@@ -237,61 +326,94 @@ const Header = () => {
                 />
               </motion.button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-[#121212] text-white">
-              <motion.div 
-                className="flex flex-col gap-6 mt-10"
-                initial="closed"
-                animate="open"
-                variants={{
-                  open: {
-                    transition: { 
-                      staggerChildren: 0.1,
-                      delayChildren: 0.2
+            <SheetContent side="left" className="bg-[#121212] text-white border-r border-white/10">
+              <div className="flex flex-col h-full">
+                <div className="flex items-center justify-center py-8 border-b border-white/10">
+                  <motion.div 
+                    className="flex-center gap-1"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.6, -0.05, 0.01, 0.99]
+                    }}
+                  >
+                    <Image src={logo} alt="logo" width={50} height={50} />
+                  </motion.div>
+                </div>
+                <motion.div 
+                  className="flex flex-col gap-8 mt-10 px-4"
+                  initial="closed"
+                  animate="open"
+                  variants={{
+                    open: {
+                      transition: { 
+                        staggerChildren: 0.1,
+                        delayChildren: 0.2
+                      }
                     }
-                  }
-                }}
-              >
-                <motion.div variants={menuItemVariants}>
-                  <SheetClose asChild>
-                    <Link 
-                      href={"/"} 
-                      className="text-lg font-normal text-white/75 hover:text-white transition-colors duration-200"
-                    >
-                      Feature
-                    </Link>
-                  </SheetClose>
+                  }}
+                >
+                  <motion.div variants={menuItemVariants}>
+                    <SheetClose asChild>
+                      <Link 
+                        href={"/why-us"} 
+                        className="text-xl font-medium text-white/90 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                        onClick={(e) => handleSmoothScroll(e, "/why-us")}
+                      >
+                        <span className="w-1 h-1 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-200"></span>
+                        Why Us
+                      </Link>
+                    </SheetClose>
+                  </motion.div>
+                  <motion.div variants={menuItemVariants}>
+                    <SheetClose asChild>
+                      <Link 
+                        href={"/"} 
+                        className="text-xl font-medium text-white/90 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                        onClick={(e) => handleSmoothScroll(e, "/#packages")}
+                      >
+                        <span className="w-1 h-1 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-200"></span>
+                        Our Packages
+                      </Link>
+                    </SheetClose>
+                  </motion.div>
+                  <motion.div variants={menuItemVariants}>
+                    <SheetClose asChild>
+                      <Link 
+                        href={"/#about"} 
+                        className="text-xl font-medium text-white/90 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                        onClick={(e) => handleSmoothScroll(e, "/#about")}
+                      >
+                        <span className="w-1 h-1 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-200"></span>
+                        About Us
+                      </Link>
+                    </SheetClose>
+                  </motion.div>
+                  <motion.div variants={menuItemVariants}>
+                    <SheetClose asChild>
+                      <Link 
+                        href={"/contact-us"} 
+                        className="text-xl font-medium text-white/90 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                        onClick={(e) => handleSmoothScroll(e, "/contact-us")}
+                      >
+                        <span className="w-1 h-1 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-200"></span>
+                        Contact Us
+                      </Link>
+                    </SheetClose>
+                  </motion.div>
                 </motion.div>
-                <motion.div variants={menuItemVariants}>
-                  <SheetClose asChild>
-                    <Link 
-                      href={"/"} 
-                      className="text-lg font-normal text-white/75 hover:text-white transition-colors duration-200"
-                    >
-                      Our Services
-                    </Link>
-                  </SheetClose>
-                </motion.div>
-                <motion.div variants={menuItemVariants}>
-                  <SheetClose asChild>
-                    <Link 
-                      href={"/"} 
-                      className="text-lg font-normal text-white/75 hover:text-white transition-colors duration-200"
-                    >
-                      About Us
-                    </Link>
-                  </SheetClose>
-                </motion.div>
-                <motion.div variants={menuItemVariants}>
-                  <SheetClose asChild>
-                    <Link 
-                      href={"/contact-us"} 
-                      className="text-lg font-normal text-white/75 hover:text-white transition-colors duration-200"
-                    >
-                      Contact Us
-                    </Link>
-                  </SheetClose>
-                </motion.div>
-              </motion.div>
+                <div className="mt-auto p-4 border-t border-white/10">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-sm text-white/50 text-center"
+                  >
+                    © 2024 TechSolace. All rights reserved.
+                  </motion.div>
+                </div>
+              </div>
             </SheetContent>
           </Sheet>
         </div>

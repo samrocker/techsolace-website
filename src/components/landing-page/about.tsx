@@ -10,9 +10,9 @@ const about = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="w-full relative mt-36">
+    <section ref={ref} className="w-full relative mt-10 md:mt-36">
       {/* Gradient Balls */}
-      <motion.div
+      {/* <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 0.6 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 1, delay: 0.3 }}
@@ -29,7 +29,7 @@ const about = () => {
         animate={isInView ? { scale: 1, opacity: 0.3 } : { scale: 0, opacity: 0 }}
         transition={{ duration: 1, delay: 0.7 }}
         className="absolute top-[40%] right-[25%] w-56 h-56 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 blur-3xl opacity-30"
-      />
+      /> */}
       {/* <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
@@ -57,8 +57,8 @@ const about = () => {
         alt="book-decoration"
         className="w-24 xs:w-28 sm:w-32 md:w-40 lg:w-52 h-auto absolute bottom-32 xs:bottom-10 sm:bottom-6 md:bottom-10 right-8 xs:right-12 sm:right-8 md:right-16 z-[-1]"
       /> */}
-      <main className="max-w-[1440px] m-auto relative">
-        <div className="px-5 py-10 w-full flex-center flex-col gap-16">
+      <main className="max-w-[1440px] m-auto relative" id="about">
+        <div className="px-5 py-10 w-full flex-center flex-col gap-10">
           <motion.h1
             initial={{ y: 50, opacity: 0 }}
             animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
