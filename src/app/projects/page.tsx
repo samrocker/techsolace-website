@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface Project {
   _id: string
@@ -26,6 +26,7 @@ interface Project {
 const AllProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [activeCategory, setActiveCategory] = useState<'all' | 'branding' | 'app' | 'web'>('all')
 
   const projects: Project[] = [
     {
@@ -94,7 +95,7 @@ const AllProjectsPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.15
       }
     }
   }
@@ -105,20 +106,28 @@ const AllProjectsPage = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.5
+        duration: 0.6,
+        ease: [0.6, -0.05, 0.01, 0.99]
       }
     }
   }
 
-  const categories = ['branding', 'app', 'web'] as const
+  const categories = ['all', 'branding', 'app', 'web'] as const
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#3B82F6]"></div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#3B82F6]"></div>
+          <p className="text-gray-400 text-sm">Loading projects...</p>
+        </div>
       </div>
     )
   }
+
+  const filteredProjects = activeCategory === 'all' 
+    ? projects 
+    : projects.filter(project => project.category === activeCategory)
 
   return (
     <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 mt-20">
@@ -137,65 +146,86 @@ const AllProjectsPage = () => {
           </p>
         </motion.div>
 
-        {categories.map((category) => (
-          <div key={category} className="mb-20">
-            <h2 className="text-2xl font-semibold text-white capitalize mb-6 border-b border-gray-700 pb-2">
-              {category}
-            </h2>
-            <motion.div
-              className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {projects
-                .filter((project) => project.category === category)
-                .map((project) => (
-                  <motion.div
-                    key={project._id}
-                    variants={itemVariants}
-                    onMouseEnter={() => setHoveredId(project._id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    className="group bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-800 hover:border-[#3B82F6]/50"
-                  >
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="block">
-                      <div className="relative w-full h-64 overflow-hidden">
-                        <Image
-                          src={`https://cdn.sanity.io/images/your_project_id/production/${project.mainImage.asset._ref
-                            .replace('image-', '')
-                            .replace('-png', '.png')
-                            .replace('-jpg', '.jpg')
-                            .replace('-jpeg', '.jpeg')}`}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#3B82F6] transition-colors duration-300">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-gray-400 line-clamp-2 mb-4">
-                          {project.summary}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {project.bulletPoints.map((point, idx) => (
-                            <span
-                              key={idx}
-                              className="bg-[#333] text-xs text-white px-3 py-1.5 rounded-full hover:bg-[#3B82F6] transition-colors duration-300"
-                            >
-                              {point}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </a>
-                  </motion.div>
-                ))}
-            </motion.div>
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex p-1 bg-[#1a1a1a] rounded-full">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeCategory === category
+                    ? 'bg-[#3B82F6] text-white shadow-lg'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project._id}
+                variants={itemVariants}
+                onMouseEnter={() => setHoveredId(project._id)}
+                onMouseLeave={() => setHoveredId(null)}
+                className="group bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-800 hover:border-[#3B82F6]/50"
+              >
+                <a href={project.url} target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="relative w-full h-64 overflow-hidden">
+                    <Image
+                      src={`https://cdn.sanity.io/images/your_project_id/production/${project.mainImage.asset._ref
+                        .replace('image-', '')
+                        .replace('-png', '.png')
+                        .replace('-jpg', '.jpg')
+                        .replace('-jpeg', '.jpeg')}`}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <span className="inline-block px-3 py-1 text-sm font-medium text-white bg-[#3B82F6] rounded-full">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#3B82F6] transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 line-clamp-2 mb-4">
+                      {project.summary}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.bulletPoints.map((point, idx) => (
+                        <span
+                          key={idx}
+                          className="bg-[#333] text-xs text-white px-3 py-1.5 rounded-full hover:bg-[#3B82F6] transition-colors duration-300"
+                        >
+                          {point}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#3B82F6] font-medium">View Project →</span>
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   )
