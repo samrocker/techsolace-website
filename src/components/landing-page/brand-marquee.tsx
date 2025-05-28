@@ -33,6 +33,10 @@ const BrandMarquee = () => {
       name: "Brand 4",
       logo: "/images/brand-logo-4.png",
     },
+    {
+      name: "Brand 5",
+      logo: "/images/brand-logo-5.webp",
+    },
   ];
 
   return (
