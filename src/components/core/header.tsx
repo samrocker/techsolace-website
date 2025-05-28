@@ -190,7 +190,7 @@ const Header = () => {
               className="text-md font-normal text-white/75"
               onClick={(e) => handleSmoothScroll(e, "/why-us")}
             >
-              Why Us
+              testimonials
             </Link>
           </motion.div>
           <motion.div 
@@ -362,7 +362,7 @@ const Header = () => {
                         onClick={(e) => handleSmoothScroll(e, "/why-us")}
                       >
                         <span className="w-1 h-1 bg-white/50 rounded-full group-hover:bg-white transition-colors duration-200"></span>
-                        Why Us
+                        testimonials
                       </Link>
                     </SheetClose>
                   </motion.div>
