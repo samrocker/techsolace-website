@@ -26,7 +26,7 @@ interface Project {
 const AllProjectsPage = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [activeCategory, setActiveCategory] = useState<'all' | 'branding' | 'app' | 'web'>('all')
+  const [activeCategory, setActiveCategory] = useState<'branding' | 'app' | 'web'>('branding')
 
   const projects: Project[] = [
     {
@@ -112,7 +112,7 @@ const AllProjectsPage = () => {
     }
   }
 
-  const categories = ['all', 'branding', 'app', 'web'] as const
+  const categories = ['branding', 'app', 'web'] as const
 
   if (isLoading) {
     return (
@@ -125,37 +125,38 @@ const AllProjectsPage = () => {
     )
   }
 
-  const filteredProjects = activeCategory === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === activeCategory)
+  const filteredProjects = projects.filter(project => project.category === activeCategory)
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 mt-20">
-      <div className="max-w-[1440px] mx-auto">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 mt-20 bg-[#0a0a0a] relative">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+      
+      <div className="max-w-[1440px] mx-auto relative">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-[#3B82F6] to-[#3B82F6]/80">
+          <h1 className="text-5xl font-bold text-white sm:text-6xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-[#3B82F6] via-[#60A5FA] to-[#93C5FD]">
             Our Works
           </h1>
-          <p className="mt-4 text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="mt-6 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Explore our portfolio of innovative solutions and successful implementations
           </p>
         </motion.div>
 
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex p-1 bg-[#1a1a1a] rounded-full">
+        <div className="flex justify-center mb-16">
+          <div className="inline-flex p-2 bg-[#1a1a1a]/50 backdrop-blur-sm rounded-full border border-gray-800/50">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-8 py-3 rounded-full text-base font-medium transition-all duration-300 ${
                   activeCategory === category
-                    ? 'bg-[#3B82F6] text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white shadow-lg shadow-[#3B82F6]/20'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -179,10 +180,10 @@ const AllProjectsPage = () => {
                 variants={itemVariants}
                 onMouseEnter={() => setHoveredId(project._id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="group bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-800 hover:border-[#3B82F6]/50"
+                className="group bg-[#1a1a1a]/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-800/50 hover:border-[#3B82F6]/50"
               >
                 <a href={project.url} target="_blank" rel="noopener noreferrer" className="block">
-                  <div className="relative w-full h-64 overflow-hidden">
+                  <div className="relative w-full h-72 overflow-hidden">
                     <Image
                       src={`https://cdn.sanity.io/images/your_project_id/production/${project.mainImage.asset._ref
                         .replace('image-', '')
@@ -191,34 +192,39 @@ const AllProjectsPage = () => {
                         .replace('-jpeg', '.jpeg')}`}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <span className="inline-block px-3 py-1 text-sm font-medium text-white bg-[#3B82F6] rounded-full">
+                      <span className="inline-block px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] rounded-full">
                         {project.category}
                       </span>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#3B82F6] transition-colors duration-300">
+                  <div className="p-8">
+                    <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#3B82F6] transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-gray-400 line-clamp-2 mb-4">
+                    <p className="text-base text-gray-400 line-clamp-2 mb-6 leading-relaxed">
                       {project.summary}
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.bulletPoints.map((point, idx) => (
                         <span
                           key={idx}
-                          className="bg-[#333] text-xs text-white px-3 py-1.5 rounded-full hover:bg-[#3B82F6] transition-colors duration-300"
+                          className="bg-[#333]/50 backdrop-blur-sm text-sm text-white px-4 py-1.5 rounded-full hover:bg-[#3B82F6] transition-colors duration-300"
                         >
                           {point}
                         </span>
                       ))}
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-[#3B82F6] font-medium">View Project →</span>
+                      <span className="text-sm text-[#3B82F6] font-medium group-hover:translate-x-2 transition-transform duration-300 inline-flex items-center gap-2">
+                        View Project 
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
                     </div>
                   </div>
                 </a>
