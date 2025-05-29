@@ -41,7 +41,7 @@ const TestimonialCard = ({
         {text}
       </p>
       <div className="flex items-center gap-3 sm:gap-4">
-        <img
+        <Image
           src={image}
           alt={name}
           width={40}

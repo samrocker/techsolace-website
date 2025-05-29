@@ -5,7 +5,7 @@ import Siren from "../../../public/images/question mark.png";
 import PaperPlane from "../../../public/images/plane.png";
 import { motion, useInView } from "framer-motion";
 
-const about = () => {
+const About = () => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -87,4 +87,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default About;
