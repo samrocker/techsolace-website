@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +10,6 @@
     text-wrap: balance;
   }
 }
-
-
 
 @layer base {
   :root {
@@ -66,7 +67,23 @@
   }
 }
 
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+
+  .flex-end {
+    @apply flex justify-end items-center;
+  }
+}
 
 @layer base {
   * {
