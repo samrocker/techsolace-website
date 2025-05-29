@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  nextjs:
+    container_name: techsolace-website
+    build: .
+    ports:
+      - "5055:5055"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
