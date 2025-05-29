@@ -11,8 +11,9 @@ const surt = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Frontend Template",
-  description: "Frontend Template",
+  title: "Techsolace - Your Dream Our Responsibility",
+  description:
+    "Discover Techsolace, where your dreams meet our commitment. We provide innovative tech solutions tailored to your needs, ensuring excellence and reliability every step of the way. Experience the future with Techsolace - Your Dream, Our Responsibility.",
 };
 
 export default function RootLayout({
